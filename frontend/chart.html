@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sales Data Chart Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        text-align: center;
+      }
+      .queries {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .query-btn {
+        padding: 10px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .query-btn:hover {
+        background-color: #45a049;
+      }
+      #salesChart {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sales Chart Analysis</h1>
+      <p>Select a query to visualize the data:</p>
+      <div class="queries">
+        <button class="query-btn" onclick="fetchChartData('Monthly Sales')">
+          Monthly Sales
+        </button>
+        <button class="query-btn" onclick="fetchChartData('Regional Sales')">
+          Regional Sales
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchChartData('Top Selling Products')"
+        >
+          Top Selling Products
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchChartData('Employee Sales Performance')"
+        >
+          Employee Sales Performance
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchChartData('Sales by Product Category')"
+        >
+          Sales by Product Category
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchChartData('Customer Sales Count')"
+        >
+          Customer Sales Count
+        </button>
+      </div>
+      <canvas id="salesChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+      let salesChart = null;
+
+      const chartConfig = {
+        "Monthly Sales": {
+          type: "line",
+          xLabel: "Month",
+          yLabel: "Total Sales",
+        },
+        "Regional Sales": {
+          type: "bar",
+          xLabel: "Region",
+          yLabel: "Total Sales",
+        },
+        "Top Selling Products": {
+          type: "bar",
+          xLabel: "Product",
+          yLabel: "Total Sold",
+        },
+        "Employee Sales Performance": {
+          type: "bar",
+          xLabel: "Employee",
+          yLabel: "Total Sales",
+        },
+        "Sales by Product Category": {
+          type: "pie",
+          xLabel: "Category",
+          yLabel: "Total Sales",
+        },
+        "Customer Sales Count": {
+          type: "bar",
+          xLabel: "Customer",
+          yLabel: "Total Sales",
+        },
+      };
+
+      function fetchChartData(queryName) {
+        fetch(`http://localhost:5001/chart/${queryName}`)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              renderChart(data.labels, data.values, queryName);
+            }
+          })
+          .catch((error) => {
+            alert("Error fetching chart data: " + error);
+          });
+      }
+
+      function renderChart(labels, values, queryName) {
+        if (salesChart) {
+          salesChart.destroy();
+        }
+
+        const config = chartConfig[queryName];
+
+        salesChart = new Chart(document.getElementById("salesChart"), {
+          type: config.type,
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: config.yLabel,
+                data: values,
+                borderColor: "#4caf50",
+                backgroundColor:
+                  config.type === "pie"
+                    ? "rgba(76, 175, 80, 0.2)"
+                    : "rgba(76, 175, 80, 0.5)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: config.xLabel,
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: config.yLabel,
+                },
+              },
+            },
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

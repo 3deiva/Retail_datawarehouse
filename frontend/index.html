@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sales Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sales Data Dashboard</h1>
+
+      <div class="queries">
+        <!-- Buttons for 15 queries -->
+        <button class="query-btn" onclick="fetchQueryData('Monthly Sales')">
+          Monthly Sales
+        </button>
+        <button class="query-btn" onclick="fetchQueryData('Regional Sales')">
+          Regional Sales
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Top Selling Products')"
+        >
+          Top Selling Products
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Employee Sales Performance')"
+        >
+          Employee Sales Performance
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Sales by Product Category')"
+        >
+          Sales by Product Category
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Customer Sales Count')"
+        >
+          Customer Sales Count
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Monthly Revenue Per Product')"
+        >
+          Monthly Revenue Per Product
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Average Sale Value')"
+        >
+          Average Sale Value
+        </button>
+        <button class="query-btn" onclick="fetchQueryData('Sales By Location')">
+          Sales By Location
+        </button>
+        <button class="query-btn" onclick="fetchQueryData('Sales By Customer')">
+          Sales By Customer
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Product Sales Over Time')"
+        >
+          Product Sales Over Time
+        </button>
+        <button
+          class="query-btn"
+          onclick="fetchQueryData('Top Revenue by Location')"
+        >
+          Top Revenue by Location
+        </button>
+        <button class="query-btn" onclick="fetchQueryData('Quarterly Revenue')">
+          Quarterly Revenue
+        </button>
+        <button class="query-btn" onclick="fetchQueryData('Yearly Revenue')">
+          Yearly Revenue
+        </button>
+      </div>
+
+      <table id="salesTable">
+        <thead>
+          <tr>
+            <!-- Table headers dynamically filled by JS -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data rows will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
